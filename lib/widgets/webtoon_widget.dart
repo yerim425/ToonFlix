@@ -13,6 +13,7 @@ class Webtoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(thumb);
     // GestureDetector : 동작 감지
     return GestureDetector(
       onTap: () {
@@ -74,6 +75,7 @@ class Webtoon extends StatelessWidget {
             tag: id,
             child: Container(
               width: 250,
+              height: 323,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -87,7 +89,7 @@ class Webtoon extends StatelessWidget {
               ),
               child: Image.network(
                 thumb,
-                headers: const {'Referer': 'https://comic.naver.com'},
+                headers: const {'Referer': 'https://comic.naver.com/'},
               ),
             ),
           ),

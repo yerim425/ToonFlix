@@ -12,10 +12,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Theme.of(context).colorScheme.primary
-            .withValues(alpha: 0.8),
-        elevation: 8,
+            .withValues(alpha: 0.6),
+        elevation: 10,
+
         title: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(width: 8),
             Text(
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
             if (snapshot.hasData) {
               return Column(
                 children: [
-                  SizedBox(height: 200),
+                  SizedBox(height: 100),
                   Expanded(child: makeList(snapshot)),
                 ],
               );
@@ -66,6 +66,8 @@ class HomePage extends StatelessWidget {
   // Future 데이터들을 리스트로 보여주기
   ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
     return ListView.separated(
+      shrinkWrap: true,
+
       scrollDirection: Axis.horizontal,
       itemCount: snapshot.data!.length,
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),

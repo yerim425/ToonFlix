@@ -1,12 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toonflix/models/webtoon_detail_model.dart';
 import 'package:toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/services/api_service.dart';
 import 'package:toonflix/widgets/episode_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailPage extends StatefulWidget {
   final String title, thumb, id;
@@ -24,12 +21,44 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  Future initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList('likedToons');
+    if (likedToons != null) {
+      if (likedToons.contains(widget.id) == true) {
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      prefs.setStringList('likedToons', []);
+    }
+  }
+
+  void onLikeTap() async {
+    final likedToons = prefs.getStringList('likedToons');
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+      await prefs.setStringList('likedToons', likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webtoon = ApiService.getWebtoonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPrefs();
   }
 
   @override
@@ -38,10 +67,18 @@ class _DetailPageState extends State<DetailPage> {
       appBar: AppBar(
         centerTitle: true,
         shadowColor: Theme.of(context).colorScheme.primary
-            .withValues(alpha: 0.8),
-        elevation: 8,
+            .withValues(alpha: 0.6),
+        elevation: 10,
+        actions: [
+          IconButton(
+            onPressed: onLikeTap,
+            icon: isLiked
+                ? Icon(Icons.favorite_border_rounded)
+                : Icon(Icons.favorite_rounded),
+            color: Color.fromARGB(255, 184, 48, 48),
+          ),
+        ],
         title: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(width: 8),
             Text(
@@ -57,7 +94,7 @@ class _DetailPageState extends State<DetailPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(50),
+          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 30),
           child: Column(
             children: [
               Row(
@@ -67,6 +104,7 @@ class _DetailPageState extends State<DetailPage> {
                     tag: widget.id,
                     child: Container(
                       width: 250,
+                      height: 323,
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -96,7 +134,7 @@ class _DetailPageState extends State<DetailPage> {
                       children: [
                         Text(
                           snapshot.data!.about,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         SizedBox(height: 15),
                         Text(
