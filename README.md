@@ -15,9 +15,9 @@
 
 ## 화면 디자인
 <p align="center">
-  <img src="./images/01.png" width:"30%"/>
-  <img src="./images/02.png" width:"30%"/>
-  <img src="./images/03.png" width:"30%"/>
+  <img src="./images/01.png" width="30%"/>
+  <img src="./images/02.png" width="30%"/>
+  <img src="./images/03.png" width="30%"/>
 </p>
 
 ## 기술 스택
