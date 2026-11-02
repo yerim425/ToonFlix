@@ -14,10 +14,10 @@
 - 웹툰 즐겨찾기 : SharedPreferences를 활용한 웹툰 즐겨찾기 설정
 
 ## 화면 디자인
-<p>
-  <img src="./images/01.png" width:"200"/>
-  <img src="./images/02.png" width:"200"/>
-  <img src="./images/03.png" width:"200"/>
+<p align="center">
+  <img src="./images/01.png" width:"30%"/>
+  <img src="./images/02.png" width:"30%"/>
+  <img src="./images/03.png" width:"30%"/>
 </p>
 
 ## 기술 스택
