@@ -13,6 +13,13 @@
 - **외부 링크 연결** : 웹툰 및 에피소드 페이지로 이동
 - 웹툰 즐겨찾기 : SharedPreferences를 활용한 웹툰 즐겨찾기 설정
 
+## 화면 디자인
+<p>
+  <img src='./images/01.png' width:30%;/>
+  <img src='./images/02.png' width:30%;/>
+  <img src='./images/03.png' width:30%;/>
+</p>
+
 ## 기술 스택
 
 | 구분              | 기술                 |
